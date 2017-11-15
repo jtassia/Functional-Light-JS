@@ -416,7 +416,7 @@ It won't always be possible to define your operations on data in an idempotent w
 
 ## Pure Bliss
 
-A function with no side causes/effects is called a pure function. A pure function is idempotent in the programming sense, since it cannot have any side effects. Consider:
+A function with no side causes/effects is called a pure function. A pure function is idempotent in the programming sense, because it cannot have any side effects. Consider:
 
 ```js
 function add(x,y) {
@@ -474,7 +474,7 @@ function unary(fn) {
 
 It's still pure because `fn` never changes. In fact, we have full confidence in that fact because lexically speaking, those few lines are the only ones that could possibly reassign `fn`.
 
-**Note:** `fn` is a reference to a function object, which is by default a mutable value. Somewhere else in the program *could* for example add a property to this function object, which technically "changes" the value (mutation, not reassignment). However, since we're not relying on anything about `fn` other than our ability to call it, and it's not possible to affect the callability of a function value, `fn` is still effectively unchanging for our reasoning purposes; it cannot be a side cause.
+**Note:** `fn` is a reference to a function object, which is by default a mutable value. Somewhere else in the program *could*, for example, add a property to this function object, which technically "changes" the value (mutation, not reassignment). However, because we're not relying on anything about `fn` other than our ability to call it, and it's not possible to affect the callability of a function value, `fn` is still effectively unchanging for our reasoning purposes; it cannot be a side cause.
 
 Another common way to articulate a function's purity is: **given the same input(s), it always produces the same output.** If you pass `3` to `circleArea(..)`, it will always output the same result (`28.274328`).
 
@@ -617,13 +617,13 @@ simpleList( function impureIO(nums){
 } );
 ```
 
-In fact, there's no way to define `rememberNumbers(..)` to make a perfectly-pure `simpleList(..)` function.
+In fact, there's no way to define `rememberNumbers(..)` to make a perfectly pure `simpleList(..)` function.
 
 Purity is about confidence. But we have to admit that in many cases, **any confidence we feel is actually relative to the context** of our program and what we know about it. In practice (in JavaScript) the question of function purity is not about being absolutely pure or not, but about a range of confidence in its purity.
 
 The more pure, the better. The more effort you put into making a function pure(r), the higher your confidence will be when you read code that uses it, and that will make that part of the code more readable.
 
-## There Or Not
+## There or Not
 
 So far, we've defined function purity both as a function without side causes/effects and as a function that, given the same input(s), always produces the same output. These are just two different ways of looking at the same characteristics.
 
@@ -671,13 +671,13 @@ The only difference between these two snippets is that in the latter one, we ski
 
 The notion that a referentially transparent pure function *can be* replaced with its output does not mean that it *should literally be* replaced. Far from it.
 
-The reasons we build functions into our programs instead of using pre-computed magic constants are not just about responding to changing data, but also about readability with proper abstractions, etc. The function call to calculate the average of that list of numbers makes that part of the program more readable than the line that just assigns the value explicitly. It tells the story to the reader of where `avg` comes from, what it means, etc.
+The reasons we build functions into our programs instead of using pre-computed magic constants are not just about responding to changing data, but also about readability with proper abstractions. The function call to calculate the average of that list of numbers makes that part of the program more readable than the line that just assigns the value explicitly. It tells the story to the reader of where `avg` comes from, what it means, and so on.
 
 What we're really suggesting with referential transparency is that as you're reading a program, once you've mentally computed what a pure function call's output is, you no longer need to think about what that exact function call is doing when you see it in code, especially if it appears multiple times.
 
 That result becomes kinda like a mental `const` declaration, which as you're reading you can transparently swap in and not spend any more mental energy working out.
 
-Hopefully the importance of this characteristic of a pure function is obvious. We're trying to make our programs more readable. One way we can do that is give the reader less work, by providing assistance to skip over the unnecessary stuff so they can focus on the important stuff.
+Hopefully the importance of this characteristic of a pure function is obvious. We're trying to make our programs more readable. One way we can do that is to give the reader less work, by providing assistance to skip over the unnecessary stuff so they can focus on the important stuff.
 
 The reader shouldn't need to keep re-computing some outcome that isn't going to change (and doesn't need to). If you define a pure function with referential transparency, the reader won't have to.
 
@@ -748,7 +748,7 @@ This silly `specialNumber(..)` algorithm is deterministic and thus pure from the
 
 However, the function has to do quite a bit of work to calculate some of the bigger numbers, especially the `987654321` input. If we needed to get that particular special number multiple times throughout our program, the `cache`ing of the result means that subsequent calls are far more efficient.
 
-Don't be so quick to assume that you could just run the `specialNumber(987654321)` calculation once and manually stick that result in some variable / constant. Programs are often highly modularized and globally accessible scopes are not usually the way you want to go around sharing state between those independent pieces. Having `specialNumber(..)` do its own caching (even though it happens to be using a global variable to do so!) is a more preferable abstraction of that state sharing.
+Don't be so quick to assume that you could just run the `specialNumber(987654321)` calculation once and manually stick that result in some variable/constant. Programs are often highly modularized and globally accessible scopes are not usually the way you want to go around sharing state between those independent pieces. Having `specialNumber(..)` do its own caching (even though it happens to be using a global variable to do so!) is a more preferable abstraction of that state sharing.
 
 The point is that if `specialNumber(..)` is the only part of the program that accesses and updates the `cache` side cause/effect, the referential transparency perspective observably holds true, and this might be seen as an acceptable pragmatic "cheat" of the pure function ideal.
 
@@ -919,43 +919,43 @@ function generateMoreRandoms(count) {
 
 The brute-force strategy to *quarantine* the side causes/effects when using this utility in the rest of our program is to create an interface function that performs the following steps:
 
-1. capture the to-be-affected current states
-2. set initial input states
-3. run the impure function
-4. capture the side effect states
-5. restore the original states
-6. return the captured side effect states
+1. Capture the to-be-affected current states
+2. Set initial input states
+3. Run the impure function
+4. Capture the side effect states
+5. Restore the original states
+6. Return the captured side effect states
 
 ```js
 function safer_generateMoreRandoms(count,initial) {
-    // (1) save original state
+    // (1) Save original state
     var orig = {
         nums,
         smallCount,
         largeCount
     };
 
-    // (2) setup initial pre-side effects state
+    // (2) Set up initial pre-side effects state
     nums = initial.nums.slice();
     smallCount = initial.smallCount;
     largeCount = initial.largeCount;
 
-    // (3) beware impurity!
+    // (3) Beware impurity!
     generateMoreRandoms( count );
 
-    // (4) capture side effect state
+    // (4) Capture side effect state
     var sides = {
         nums,
         smallCount,
         largeCount
     };
 
-    // (5) restore original state
+    // (5) Restore original state
     nums = orig.nums;
     smallCount = orig.smallCount;
     largeCount = orig.largeCount;
 
-    // (6) expose side effect state directly as output
+    // (6) Expose side effect state directly as output
     return sides;
 }
 ```
@@ -983,7 +983,7 @@ That's a lot of manual work to avoid a few side causes/effects; it'd be a lot ea
 
 ### Evading Effects
 
-When the nature of the side effect to be dealt with is a mutation of a direct input value (object, array, etc) via reference, we can again create an interface function to interact with instead of the original impure function.
+When the nature of the side effect to be dealt with is a mutation of a direct input value (object, array, etc.) via reference, we can again create an interface function to interact with instead of the original impure function.
 
 Consider:
 
