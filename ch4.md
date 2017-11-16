@@ -265,7 +265,7 @@ wordsUsed;
 // "function","input","second"]
 ```
 
-Now, let's recall `partialRight(..)` from Chapter 3 to do something more interesting with composition. We can build a right-partial application of `compose(..)` itself, pre-specifying the second and third arguments (`unique(..)` and `words(..)`, respectively); we'll call it `filterWords(..)` (see below).
+To do something more interesting with composition, let's use `partialRight(..)`, which we first looked at in Chapter 3. We can build a right-partial application of `compose(..)` itself, pre-specifying the second and third arguments (`unique(..)` and `words(..)`, respectively); we'll call it `filterWords(..)`.
 
 Then, we can complete the composition multiple times by calling `filterWords(..)`, but with different first-arguments respectively:
 
@@ -299,7 +299,7 @@ While you may very well never implement your own `compose(..)` to use in product
 
 So let's examine some different implementation options for `compose(..)`. We'll also see there are some pros/cons to each implementation, especially performance.
 
-We'll be looking at the `reduce(..)` utility in detail later in the text, but for now, just know that it reduces a list (array) to a single finite value. It's like a fancy loop.
+We'll be looking at the `reduce(..)` utility in detail in Chapter 9, but for now, just know that it reduces a list (array) to a single finite value. It's like a fancy loop.
 
 For example, if you did an addition-reduction across the list of numbers `[1,2,3,4,5,6]`, you'd be looping over them adding them together as you go. The reduction would add `1` to `2`, and add that result to `3`, and then add that result to `4`, and so on, resulting in the final summation: `21`.
 
@@ -560,7 +560,7 @@ Aside from generalization vs. specialization, I think there's another more usefu
 >
 > Scott, Michael L. “Chapter 3: Names, Scopes, and Bindings.” Programming Language Pragmatics, 4th ed., Morgan Kaufmann, 2015, pp. 115.
 
-The point this quote makes is that abstraction -- generally, pulling out some piece of code into its own function -- serves the primary purpose of separating apart two pieces of functionality so that each piece can be focused on independent of the other.
+The point this quote makes is that abstraction -- generally, pulling out some piece of code into its own function -- serves the primary purpose of separating apart two pieces of functionality so that it's possible to focus on each piece independently of the other.
 
 Note that abstraction in this sense is not really intended to *hide* details, as if to treat things as black boxes we *never* examine.
 
@@ -669,7 +669,7 @@ getLastOrder( function orderFound(order){
 
 The "points" we'd like to remove are the `order` and `person` parameter references.
 
-Let's start by trying to get the `person` "point" out of the `personFound(..)` function. To do so, let's first to define:
+Let's start by trying to get the `person` "point" out of the `personFound(..)` function. To do so, let's first define:
 
 ```js
 function extractName(person) {
