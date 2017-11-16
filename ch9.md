@@ -1395,7 +1395,7 @@ BinaryTree.reduce(
     [],
     banana
 );
-// ["apple","apricot","avocado","banana","cantelope"
+// ["apple","apricot","avocado","banana","cantaloupe"
 //   "cherry","cucumber","grape"]
 ```
 
