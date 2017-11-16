@@ -443,7 +443,7 @@ This isn't in PTC form because after the recursive call to `sum(...nums)` is fin
 
 The key recognition point for this refactoring strategy is that we could remove our dependence on the stack by doing the addition *now* instead of *after*, and then forward-passing that partial result as an argument to the recursive call. In other words, instead of keeping `total` in the current function's stack frame, push it into the stack frame of the next recursive call; that frees up the current stack frame to be removed/reused.
 
-To start, we could alter the signature our `sum(..)` function to have a new first parameter as the partial result:
+To start, we could alter our `sum(..)` function's signature to have a new first parameter as the partial result:
 
 ```js
 function sum(result,num1,...nums) {
