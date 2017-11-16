@@ -163,7 +163,7 @@ My conclusion: `PI` here is not a violation of the spirit of minimizing/avoiding
 
 In both cases, `PI` and `bar` are not part of the state of the program. They're fixed, non-reassigned references. If they don't change throughout the program, we don't have to worry about tracking them as changing state. As such, they don't harm our readability. And they cannot be the source of bugs related to variables changing in unexpected ways.
 
-**Note:** The use of `const` here does not, in my opinion, make the case that `PI` is absolved as a side cause; `var PI` would lead to the same conclusion. The lack of reassigning `PI` is what matters, not the inability to do so. We'll discuss `const` in a later chapter.
+**Note:** The use of `const` here does not, in my opinion, make the case that `PI` is absolved as a side cause; `var PI` would lead to the same conclusion. The lack of reassigning `PI` is what matters, not the inability to do so. We'll discuss `const` in Chapter 6.
 
 #### Randomness
 
@@ -710,7 +710,7 @@ Is a side cause/effect that's unobserved like this tree:
 
 > If a tree falls in the forest, but no one is around to hear it, does it still make a sound?
 
-By the narrowest definition of referential transparency, I think you'd have to say `calculateAverage(..)` is still a pure function. But as we're trying to not just be academic in our study, but balanced with pragmatism, I think this conclusion needs more perspective. Let's explore.
+By the narrowest definition of referential transparency, I think you'd have to say `calculateAverage(..)` is still a pure function. However, because we're trying to avoid a strictly academic approach in favor of balancing it with pragmatism, I also think this conclusion needs more perspective. Let's explore.
 
 #### Performance Effects
 
