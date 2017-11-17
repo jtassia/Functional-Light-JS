@@ -51,7 +51,7 @@ A basic primitive monad underlying many other monads you will run across is call
 
 Since a monad is a type, you might think we'd define `Just` as a class to be instantiated. That's a valid way of doing it, but it introduces `this`-binding issues in the methods that I don't want to juggle; instead, I'm going to stick with just a simple function approach.
 
-Here's a simple implementation:
+Here's a basic implementation:
 
 ```js
 function Just(val) {
