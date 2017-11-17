@@ -299,7 +299,7 @@ Your instinct might be that concurrent would always be preferable, and while tha
 
 For example, what if `fetchImage(..)` maintains a cache of fetched images, and it checks the cache before making the actual network request? What if, in addition to that, the list of `imageURLs` could have duplicates in it? You'd certainly want the first fetch of an image URL to complete (and populate the cache) before doing the check on the duplicate image URL later in the list.
 
-Again, there will inevitably be cases where whether concurrent or serial asynchrony will be called for. Asynchronous reductions will always be serial, whereas asynchronous mappings may likely tend to be more concurrent but can also need to be serial in some cases. That's why **fasy** supports all these options.
+Again, there will inevitably be cases where concurrent or serial asynchrony will be called for. Asynchronous reductions will always be serial, whereas asynchronous mappings may likely tend to be more concurrent but can also need to be serial in some cases. That's why **fasy** supports all these options.
 
 Along with Observables, **fasy** will help you extend more FP patterns and principles to your asynchronous operations.
 
